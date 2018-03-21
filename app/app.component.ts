@@ -13,7 +13,21 @@ declare var FirebaseAuth: any;
 export class AppComponent {
 
     ngOnInit() {
-        this.initFirebase();
+        this.initFirebase().then(() => {
+
+        }, (error) => {
+            console.log('error occured', error);
+        });
+    }
+    register() {
+        alert('registered');
+        // firebase.addOnPushTokenReceivedCallback(
+        //     (token) => {
+        //         console.log("Current push token addonpushtokenreceived: " + token);
+        //         // ..
+        //     }
+        // );
+
     }
     initFirebase(): Promise<any> {
         return firebase.init({
@@ -21,43 +35,57 @@ export class AppComponent {
                 if (data.loggedIn) {
                 }
             },
-            onMessageReceivedCallback: (message) => {
-                console.log("this is initfirbase");
-                console.log(`Message: onMessageReceivedCallback1 ${JSON.stringify(message)}`);
-            },
+            // onMessageReceivedCallback: (message) => {
+            //     console.log("this is initfirbase");
+            //     if (message) {
+            //         console.log(`Mssage: onMessageReceivedCallback1 ${message.body}`);
+
+            //     }
+            //     console.log('message', message);
+            // },
         }).then((instance) => {
-            var token = com.google.firebase.iid.FirebaseInstanceId.getInstance().getToken();
-            token = token || '';
-            console.log("firebase-token", token);
+            firebase.getCurrentPushToken().then((token: string) => {
+                // may be null if not known yet
+                console.log("Current push token: " + token);
+            });
+            firebase.addOnMessageReceivedCallback(
+                (message) => {
+                    console.log("this is initfirbase");
+                    if (message && message.title) {
+                        console.log(`Mssage: onMessageReceivedCallback1 ${message.data}`);
+                        //this.sendNotification({title: message.title, body : message.data.body});
+                    }
+                }
+            );
         });
     }
     send() {
-        this.setNotification();
+        this.sendNotification({ title: "testing notification", body: "description goes here" });
 
     }
-    setNotification() {
+    sendNotification(message) {
         LocalNotifications.schedule([{
             id: 1,
-            title: 'The title',
-            body: 'Recurs every minute until cancelled',
-            ticker: 'The ticker',
+            title: message.title || '',
+            body: message.body || '',//Recurs every minute until cancelled',
+            //ticker: 'The ticker',
             badge: 1,
-            groupedMessages:["The first", "Second", "Keep going", "one more..", "OK Stop"], //android only
-            groupSummary:"Summary of the grouped messages above", //android only
-            ongoing: true, // makes the notification ongoing (Android only)
+            //groupedMessages: ["The first", "Second", "Keep going", "one more..", "OK Stop"], //android only
+            //groupSummary: "Summary of the grouped messages above", //android only
+            //ongoing: true, // makes the notification ongoing (Android only)
             smallIcon: 'res://heart',
-            largeIcon : 'res://background',
-            interval: 'minute',
-            sound: "customsound-ios.wav", // falls back to the default sound on Android
-            at: new Date(new Date().getTime() + (10 * 1000)) // 10 seconds from now
-          }]).then(
-              function() {
+            largeIcon: 'res://background',
+            //interval: 'minute',
+            //sound: "customsound-ios.wav", // falls back to the default sound on Android
+            at: new Date(new Date().getTime() + (1 * 1000)) // 10 seconds from now
+        }]).then(
+            function () {
                 console.log("Notification scheduled");
-              },
-              function(error) {
+            },
+            function (error) {
                 console.log("scheduling error: " + error);
-              }
-          )
-        }
+            }
+            )
+    }
 
 }
