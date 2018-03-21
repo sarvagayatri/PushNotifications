@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "482218797239",
+    "firebase_url": "https://notification-testing1.firebaseio.com",
+    "project_id": "notification-testing1",
+    "storage_bucket": "notification-testing1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:482218797239:android:25f85029cf317279",
+        "android_client_info": {
+          "package_name": "com.xavica.pushtest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "482218797239-k4v898gh7j0r6on5mv3gpnfgp46vmn7n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYZpQGxR6U6XZ8ReWirvV8W5m__IqVcgk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

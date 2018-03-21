@@ -1,0 +1,34 @@
+// Add your native dependencies here:
+
+// Uncomment to add recyclerview-v7 dependency
+//dependencies {
+//	compile 'com.android.support:recyclerview-v7:+'
+//}
+dependencies {
+  compile "com.google.android.gms:play-services-base:11.8.0"
+}
+android {  
+  defaultConfig {  
+    generatedDensities = []
+     multiDexEnabled true
+    applicationId = "com.xavica.pushtest" 
+    
+    //override supported platforms
+    // ndk {
+    //       abiFilters.clear()
+    //   		abiFilters "armeabi-v7a"
+ 		// }
+  
+  }  
+  aaptOptions {  
+    additionalParameters "--no-version-vectors"  
+  }
+  project.ext {
+    googlePlayServicesVersion = "11.8.0"
+  } 
+
+  dexOptions {
+    jumboMode true
+    javaMaxHeapSize "4g"
+  }  
+} 
